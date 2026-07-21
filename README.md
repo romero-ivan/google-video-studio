@@ -2,7 +2,7 @@
 
 VidCraft Studio is a minimalist web video editor built with HTML5, CSS, and JavaScript. Inspired by Apple Liquid Glass UI and Google Material color accents, it operates 100% client-side inside your browser with zero server uploads.
 
-[Repository](https://github.com/romero-ivan/google-video-studio) | [Live Demo](http://localhost:3000/)
+[Repository](https://github.com/romero-ivan/google-video-studio) | [Live Demo](https://google-video-studio.vercel.app)
 
 ---
 
