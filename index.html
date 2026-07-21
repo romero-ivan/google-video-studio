@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VidCraft Studio</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <!-- Ambient Liquid Glow Mesh -->
+  <div class="liquid-mesh">
+    <div class="mesh-orb mesh-orb-1"></div>
+    <div class="mesh-orb mesh-orb-2"></div>
+    <div class="mesh-orb mesh-orb-3"></div>
+    <div class="mesh-orb mesh-orb-4"></div>
+  </div>
+
+  <div id="app">
+    <!-- Header Navbar -->
+    <header class="app-header">
+      <h1 class="brand-title">VidCraft Studio</h1>
+
+      <div class="header-actions">
+        <a href="https://github.com/romero-ivan" target="_blank" rel="noopener noreferrer" class="btn-glass btn-github" title="GitHub profile: romero-ivan">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span>romero-ivan</span>
+        </a>
+        <button class="btn-glass btn-icon" id="themeToggleBtn" title="Toggle Theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+        <button class="btn-glass btn-primary" id="headerExportBtn" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          Export Video
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+      <!-- Stage Column -->
+      <section class="stage-container">
+        <!-- Dropzone state -->
+        <div class="upload-dropzone" id="dropzone">
+          <input type="file" id="videoFileInput" accept="video/*, .mp4, .MP4, .webm, .WEBM, .mov, .MOV, .mkv, .MKV, .avi, .AVI, .m4v, .M4V, .flv, .FLV, .wmv, .WMV, .3gp, .ts, .mts, *" multiple hidden>
+          <div class="upload-icon-wrapper">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <h2 class="upload-title">Drop your videos here or click to browse</h2>
+          <p class="upload-subtitle">Universal support for MP4, WebM, MOV, MKV, AVI and all video formats on Mac and Windows.</p>
+          <div class="format-tags">
+            <span class="tag-pill">.MP4</span>
+            <span class="tag-pill">.WEBM</span>
+            <span class="tag-pill">.MOV</span>
+            <span class="tag-pill">.MKV</span>
+            <span class="tag-pill">.AVI</span>
+            <span class="tag-pill">.M4V</span>
+          </div>
+        </div>
+
+        <!-- Video Player Card -->
+        <div class="player-card" id="playerCard" style="display: none;">
+          <div class="player-wrapper">
+            <video id="mainVideoPlayer" class="preview-video"></video>
+
+            <!-- Overlay Player Controls -->
+            <div class="player-overlay-controls">
+              <button class="btn-glass btn-icon" id="playPauseBtn">
+                <svg id="playIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+                <svg id="pauseIcon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                  <rect x="6" y="4" width="4" height="16"/>
+                  <rect x="14" y="4" width="4" height="16"/>
+                </svg>
+              </button>
+              <span class="timecode-display" id="overlayTimecode">00:00 / 00:00</span>
+              <button class="btn-glass btn-icon" id="fullscreenBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dual-Track Timeline -->
+        <div class="timeline-card" id="timelineCard">
+          <!-- Rendered dynamically by Timeline.js -->
+        </div>
+      </section>
+
+      <!-- Sidebar Controls -->
+      <aside class="sidebar-panel">
+        <!-- Audio Panel -->
+        <div class="panel-card">
+          <h3 class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="2">
+              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+            </svg>
+            Audio Track Settings
+          </h3>
+
+          <div class="form-group">
+            <label class="form-label">Replacement Audio File</label>
+            <input type="file" id="audioFileInput" accept="audio/*, .mp3, .wav, .aac, .ogg, .m4a, *" hidden>
+            <button class="btn-glass" id="loadAudioBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              Load Custom Audio Track
+            </button>
+          </div>
+
+          <div id="replacementAudioInfo" style="display: none;" class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="clip-name" id="replacementAudioName" style="font-size:0.8rem;">audio.mp3</span>
+              <button class="btn-glass btn-danger btn-icon" id="removeAudioBtn" style="width:26px; height:26px;" title="Remove replacement audio">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clips List -->
+        <div class="panel-card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 class="panel-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FBBC05" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+                <line x1="7" y1="2" x2="7" y2="22"/>
+                <line x1="17" y1="2" x2="17" y2="22"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+              </svg>
+              Video Clips
+            </h3>
+            <button class="btn-glass" id="addMoreClipsBtn" style="padding: 4px 10px; font-size: 0.75rem;">+ Add Clip</button>
+          </div>
+
+          <div class="clips-list" id="clipsListContainer">
+            <p style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 12px;">No clips loaded yet</p>
+          </div>
+        </div>
+
+        <!-- Export Configuration -->
+        <div class="panel-card">
+          <h3 class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+              <polyline points="2 17 12 22 22 17"/>
+              <polyline points="2 12 12 17 22 12"/>
+            </svg>
+            Export Options
+          </h3>
+
+          <div class="form-group">
+            <label class="form-label">Container Format</label>
+            <select class="select-glass" id="exportFormatSelect">
+              <option value="mp4">MP4 (H.264 / AAC - Recommended)</option>
+              <option value="webm">WebM (VP9 / Opus)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Resolution Preset</label>
+            <select class="select-glass" id="exportResolutionSelect">
+              <option value="original">Original Source Resolution</option>
+              <option value="1080p">Full HD 1080p</option>
+              <option value="720p">HD 720p</option>
+              <option value="480p">SD 480p</option>
+            </select>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Export Progress Modal -->
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal-glass">
+      <h3 style="font-size: 1.25rem; font-weight: 600;" id="modalTitle">Rendering Video...</h3>
+      
+      <!-- Progress Ring -->
+      <div class="progress-ring-container">
+        <svg width="120" height="120">
+          <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
+          <circle class="progress-ring-circle" id="progressCircle" cx="60" cy="60" r="50" 
+                  stroke="#4285F4" stroke-width="8" fill="none" 
+                  stroke-dasharray="314.159" stroke-dashoffset="314.159" stroke-linecap="round"/>
+        </svg>
+        <span class="progress-text" id="progressPctText">0%</span>
+      </div>
+
+      <p style="font-size: 0.875rem; color: var(--text-muted);" id="modalStatusText">Processing video frames...</p>
+
+      <div style="display:flex; gap:12px; margin-top: 8px;">
+        <button class="btn-glass btn-danger" id="cancelExportBtn">Cancel</button>
+        <a class="btn-glass btn-primary" id="downloadVideoBtn" style="display: none;" download="edited_video.mp4">
+          Download Video
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
